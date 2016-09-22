@@ -390,11 +390,14 @@ const MOVIEDB_RESULTS = [
   }
 ];
 
-exports.seed = function(knex, Promise) {
+exports.movies = MOVIEDB_RESULTS;
+
+exports.seed = function (knex, Promise) {
   return knex('movies').del()
     .then(function () {
       return Promise.all(MOVIEDB_RESULTS.map(movie => {
         const {
+          id,
           title,
           original_language,
           release_date,
@@ -405,6 +408,7 @@ exports.seed = function(knex, Promise) {
         } = movie;
 
         return knex('movies').insert({
+          id,
           title,
           release_date,
           overview,
