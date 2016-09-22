@@ -1,6 +1,6 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('movies', t => {
-    t.increments().primary();
+    t.increments('id').primary();
     t.string('title').notNull();
     t.enu('language', ['en', 'de', 'hi', 'ja']).notNull();
     t.date('release_date').notNull();
