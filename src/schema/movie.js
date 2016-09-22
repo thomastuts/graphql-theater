@@ -14,7 +14,10 @@ export const schema = `
 `;
 
 export const queries = `
+  # Fetch a single movie with the given movie ID.
   movie(id: Int!): Movie
+  
+  # Fetch all movies.
   movies: [Movie]
 `;
 
