@@ -1,23 +1,21 @@
 import { buildSchema } from 'graphql';
+import { addResolveFunctionsToSchema } from 'graphql-tools';
 
 import * as movieSchema from './movie';
 
 const schema = buildSchema(`
-  enum LANGUAGE {
-    en
-    de
-    ja
-    hi
-  }
-
   ${movieSchema.schema}
-
+  
   type Query {
     ${movieSchema.queries}
   }
 `);
 
-const root = Object.assign({}, movieSchema.rootResolvers);
+const root = Object.assign({}, movieSchema.rootQueryResolvers);
+
+addResolveFunctionsToSchema(schema, {
+  Movie: movieSchema.resolvers,
+});
 
 module.exports = {
   schema,
