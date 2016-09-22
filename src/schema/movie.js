@@ -1,4 +1,5 @@
 import { getMovies, getMovie } from '../repositories/movies';
+import { getGenresForMovie } from '../repositories/genres';
 
 export const schema = `
   enum BACKDROP_SIZES {
@@ -23,6 +24,7 @@ export const schema = `
     title: String!
     language: String! #TODO: should be enum
     release_date: String! #TODO: should be date
+    genres: [Genre]
     overview: String!
     rating: Float!
     backdrop(size: BACKDROP_SIZES!): String! #TODO: should be resolved using image size argument
@@ -43,6 +45,9 @@ function getImageUrl(size, path) {
 }
 
 export const resolvers = {
+  genres: (obj, args) => {
+    return getGenresForMovie(obj.id);
+  },
   backdrop: (obj, args) => {
     return getImageUrl(args.size, obj.backdrop_path);
   },
