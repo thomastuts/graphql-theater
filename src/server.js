@@ -1,9 +1,9 @@
-const express = require('express');
-const graphqlHTTP = require('express-graphql');
+import graphqlHTTP from 'express-graphql';
+import express from 'express';
 const config = require('dotenv').config();
-const knexConfig = require('../knexfile');
 
-const { schema, root } = require('./schema');
+import knexConfig from '../knexfile';
+import { schema, root } from './schema';
 
 const knex = require('knex')(knexConfig[config.NODE_ENV || 'development']);
 
