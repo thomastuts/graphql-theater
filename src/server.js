@@ -5,7 +5,7 @@ const config = require('dotenv').config();
 import knexConfig from '../knexfile';
 import { schema, root } from './schema';
 
-const knex = require('knex')(knexConfig[config.NODE_ENV || 'development']);
+export const knex = require('knex')(knexConfig[config.NODE_ENV || 'development']);
 
 const app = express();
 app.use('/graphql', graphqlHTTP({

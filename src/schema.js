@@ -1,10 +1,19 @@
 import { buildSchema } from 'graphql';
 
+import * as movieRepository from './repositories/movies';
+
 const schema = buildSchema(`
+  enum LANGUAGE {
+    en
+    de
+    ja
+    hi
+  }
+
   type Movie {
     id: Int!
     title: String!
-    language: String! #TODO: should be enum
+    language: LANGUAGE! #TODO: should be enum
     release_date: String! #TODO: should be date
     overview: String!
     rating: Float!
@@ -20,15 +29,10 @@ const schema = buildSchema(`
 
 const root = {
   movie(args, context) {
-    return context.db
-      .table('movies')
-      .first()
-      .where('id', args.id);
+    return movieRepository.getMovie(args.id);
   },
   movies(args, context) {
-    return context.db
-      .select()
-      .from('movies');
+    return movieRepository.getMovies();
   },
 };
 
