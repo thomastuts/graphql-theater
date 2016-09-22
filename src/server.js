@@ -3,7 +3,7 @@ import express from 'express';
 const config = require('dotenv').config();
 
 import knexConfig from '../knexfile';
-import { schema, root } from './schema';
+import { schema, root } from './schema/index';
 
 export const knex = require('knex')(knexConfig[config.NODE_ENV || 'development']);
 

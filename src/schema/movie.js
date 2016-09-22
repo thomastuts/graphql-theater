@@ -1,15 +1,6 @@
-import { buildSchema } from 'graphql';
+import { getMovies, getMovie } from '../repositories/movies';
 
-import * as movieRepository from './repositories/movies';
-
-const schema = buildSchema(`
-  enum LANGUAGE {
-    en
-    de
-    ja
-    hi
-  }
-
+export const schema = `
   type Movie {
     id: Int!
     title: String!
@@ -20,23 +11,18 @@ const schema = buildSchema(`
     backdrop_path: String! #TODO: should be resolved using image size argument
     poster_path: String! #TODO: should be resolved using image size argument
   }
+`;
 
-  type Query {
-    movie(id: Int!): Movie
-    movies: [Movie]
-  }
-`);
+export const queries = `
+  movie(id: Int!): Movie
+  movies: [Movie]
+`;
 
-const root = {
+export const rootResolvers = {
   movie(args, context) {
-    return movieRepository.getMovie(args.id);
+    return getMovie(args.id);
   },
   movies(args, context) {
-    return movieRepository.getMovies();
+    return getMovies();
   },
-};
-
-module.exports = {
-  schema,
-  root,
 };
